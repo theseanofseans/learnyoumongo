@@ -59,3 +59,18 @@ have finished.
 // Use the parrots collection to find all documents where age
 // is greater than the first argument passed to your script.
 
+var search_age= parseInt(process.argv[2]);
+
+var url= 'mongodb://localhost:27017/learnyoumongo';
+var mongo = require('mongodb').MongoClient;
+mongo.connect(url, function(err, db) {
+  // db gives access to the database
+	var parrots= db.collection('parrots');
+    parrots.find({
+      age: { $gt: search_age }
+    }).toArray(function(err, documents) {
+			console.log(  documents );
+			db.close();
+    });
+});
+
